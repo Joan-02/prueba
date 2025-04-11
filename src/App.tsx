@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { AddTask } from "./AddTask";
 import { Task } from "./task.models";
@@ -12,6 +12,9 @@ function App() {
     { text: "Tarea 1", isCompleted: false, id: Math.random() }, // Tarea pendiente
     { text: "Tarea 2", isCompleted: true, id: Math.random() }, // Tarea completada
   ]);
+
+  const [completedTasks, setCompletedTasks] = useState<number>(0);
+  const [showImage, setShowImage] = useState(false);
 
   // Función para eliminar una tarea, dado su id
   const deleteTask = (taskId: number) => {
@@ -64,6 +67,22 @@ function App() {
     return true;
   });
 
+  useEffect(() => {
+    const countCompletedTasks = tasks.filter((task) => task.isCompleted).length;
+    setCompletedTasks(countCompletedTasks);
+  }, [tasks]);
+
+  useEffect(() => {
+    if (completedTasks === 4) {
+      setShowImage(true);
+      const timeOut = setTimeout(() => {
+        setShowImage(false);
+      }, 3000);
+
+      return () => clearTimeout(timeOut);
+    }
+  }, [completedTasks]);
+
   return (
     <>
       <h1>TODO - LIST</h1>
@@ -115,6 +134,15 @@ function App() {
             </div>
           );
         })}
+        {showImage && (
+          <div className="image-container">
+            <img
+              className="unicorn-image"
+              src="/unicorn.jpg"
+              alt="Imagen cuando hay 4 tareas completadas"
+            />
+          </div>
+        )}
       </div>
     </>
   );
