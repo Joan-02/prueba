@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { AddTask } from "./Addtask";
+import { AddTask } from "./AddTask";
 import { Task } from "./task.models";
 
 function App() {
@@ -49,6 +49,11 @@ function App() {
     setIsOnlyCompleted(true);
   };
 
+  const handleAllTasks = () => {
+    setIsOnlyPending(false);
+    setIsOnlyCompleted(false);
+  };
+
   const filteredTasks = tasks.filter((task) => {
     if (isOnlyPending) {
       return !task.isCompleted;
@@ -76,6 +81,11 @@ function App() {
           onClick={handleIsOnlyCompletedClick} // Cambia el estado del filtro al hacer click
         >
           Show only completed
+        </button>
+        <button
+          onClick={handleAllTasks} // Cambia el estado del filtro al hacer click
+        >
+          Show all tasks
         </button>
       </div>
 

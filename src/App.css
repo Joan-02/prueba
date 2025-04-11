@@ -84,3 +84,8 @@
   background: #747bff;
   color: white;
 }
+
+.filters__btn--selected--2 {
+  background: #058d54;
+  color: white;
+}
